@@ -14,6 +14,9 @@
 		AAD1AD791AE877530021CF99 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD1AD781AE877530021CF99 /* Images.xcassets */; };
 		AAD1AD7C1AE877530021CF99 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD1AD7A1AE877530021CF99 /* LaunchScreen.xib */; };
 		AAD1AD881AE877530021CF99 /* TraveLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD1AD871AE877530021CF99 /* TraveLogTests.m */; };
+		AAD1AD921AE87F7F0021CF99 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD1AD911AE87F7F0021CF99 /* CoreLocation.framework */; };
+		AAD1AD941AE8902D0021CF99 /* buttonPressed.plist in Resources */ = {isa = PBXBuildFile; fileRef = AAD1AD931AE8902D0021CF99 /* buttonPressed.plist */; };
+		AAD1AD981AE97A8A0021CF99 /* Locations.plist in Resources */ = {isa = PBXBuildFile; fileRef = AAD1AD971AE97A8A0021CF99 /* Locations.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,9 @@
 		AAD1AD811AE877530021CF99 /* TraveLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TraveLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD1AD861AE877530021CF99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAD1AD871AE877530021CF99 /* TraveLogTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TraveLogTests.m; sourceTree = "<group>"; };
+		AAD1AD911AE87F7F0021CF99 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		AAD1AD931AE8902D0021CF99 /* buttonPressed.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = buttonPressed.plist; sourceTree = "<group>"; };
+		AAD1AD971AE97A8A0021CF99 /* Locations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Locations.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAD1AD921AE87F7F0021CF99 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +70,7 @@
 		AAD1AD5F1AE877520021CF99 = {
 			isa = PBXGroup;
 			children = (
+				AAD1AD911AE87F7F0021CF99 /* CoreLocation.framework */,
 				AAD1AD6A1AE877520021CF99 /* TraveLog */,
 				AAD1AD841AE877530021CF99 /* TraveLogTests */,
 				AAD1AD691AE877520021CF99 /* Products */,
@@ -89,6 +97,8 @@
 				AAD1AD781AE877530021CF99 /* Images.xcassets */,
 				AAD1AD7A1AE877530021CF99 /* LaunchScreen.xib */,
 				AAD1AD6B1AE877520021CF99 /* Supporting Files */,
+				AAD1AD931AE8902D0021CF99 /* buttonPressed.plist */,
+				AAD1AD971AE97A8A0021CF99 /* Locations.plist */,
 			);
 			path = TraveLog;
 			sourceTree = "<group>";
@@ -168,6 +178,11 @@
 				TargetAttributes = {
 					AAD1AD671AE877520021CF99 = {
 						CreatedOnToolsVersion = 6.2;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					AAD1AD801AE877530021CF99 = {
 						CreatedOnToolsVersion = 6.2;
@@ -202,6 +217,8 @@
 				AAD1AD771AE877530021CF99 /* Main.storyboard in Resources */,
 				AAD1AD7C1AE877530021CF99 /* LaunchScreen.xib in Resources */,
 				AAD1AD791AE877530021CF99 /* Images.xcassets in Resources */,
+				AAD1AD981AE97A8A0021CF99 /* Locations.plist in Resources */,
+				AAD1AD941AE8902D0021CF99 /* buttonPressed.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

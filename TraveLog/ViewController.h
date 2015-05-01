@@ -7,9 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : UIViewController
-
+@interface ViewController : UIViewController <CLLocationManagerDelegate>
+{
+    CLLocationManager *locationManager;
+    IBOutlet UILabel *alertLabel;
+    NSString *plistPath, *locPath;
+    NSMutableDictionary *plistDict, *locDict;
+    float latitude, longitude;
+}
+@property (weak, nonatomic) IBOutlet UILabel *Title;
+@property(nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, retain) IBOutlet UILabel *alertLabel;
+- (IBAction)startTracking:(id)sender;
+- (void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult)) completionHandler;
 
 @end
 
