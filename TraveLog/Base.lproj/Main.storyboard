@@ -28,22 +28,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Red-gH-ljk">
-                                <rect key="frame" x="109" y="195" width="102" height="30"/>
-                                <state key="normal" title="Begin Tracking">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="startTracking:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="CIv-i9-2rr"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="Title" destination="VF3-as-obz" id="Pqf-T4-fqB"/>
                         <outlet property="alertLabel" destination="lOt-I9-Lon" id="t9Z-0g-Q0R"/>
-                        <outlet property="startTrackingButton" destination="Red-gH-ljk" id="95x-Zc-b5R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

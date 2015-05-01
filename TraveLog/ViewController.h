@@ -18,9 +18,9 @@
     float latitude, longitude;
 }
 @property (weak, nonatomic) IBOutlet UILabel *Title;
-@property(nonatomic, retain) CLLocationManager *locationManager;
+@property(nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, retain) IBOutlet UILabel *alertLabel;
-- (IBAction)startTracking:(id)sender;
+//- (IBAction)startTracking:(id)sender;
 - (void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult)) completionHandler;
 
 @end
