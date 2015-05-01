@@ -20,6 +20,8 @@
     [super viewDidLoad];
     //plistPath = [[NSBundle mainBundle] pathForResource:@"buttonPressed" ofType:@"plist"];
     //plistDict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+    self.myMapView.delegate = self;
+    [self.myMapView setShowsUserLocation:YES];
     locPath = [[NSBundle mainBundle] pathForResource:@"Locations" ofType:@"plist"];
     locDict = [NSMutableDictionary dictionaryWithContentsOfFile:locPath];
     NSLog(@"locationServicesEnabled: %@", [CLLocationManager locationServicesEnabled] ? @"YES":@"NO");
@@ -35,6 +37,12 @@
     [self.locationManager startUpdatingLocation];
 }
 
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    CLLocationCoordinate2D myLocation = [userLocation coordinate];
+    MKCoordinateRegion zoomRegion = MKCoordinateRegionMakeWithDistance(myLocation, 2500, 2500);
+    [self.myMapView setRegion:zoomRegion animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

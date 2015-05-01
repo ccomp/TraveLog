@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AACA4D4C1AF433E000A10210 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACA4D4B1AF433DF00A10210 /* MapKit.framework */; };
 		AAD1AD6E1AE877520021CF99 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD1AD6D1AE877520021CF99 /* main.m */; };
 		AAD1AD711AE877520021CF99 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD1AD701AE877520021CF99 /* AppDelegate.m */; };
 		AAD1AD741AE877530021CF99 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD1AD731AE877530021CF99 /* ViewController.m */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AACA4D4B1AF433DF00A10210 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		AAD1AD681AE877520021CF99 /* TraveLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TraveLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD1AD6C1AE877520021CF99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAD1AD6D1AE877520021CF99 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AACA4D4C1AF433E000A10210 /* MapKit.framework in Frameworks */,
 				AAD1AD921AE87F7F0021CF99 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,6 +73,7 @@
 		AAD1AD5F1AE877520021CF99 = {
 			isa = PBXGroup;
 			children = (
+				AACA4D4B1AF433DF00A10210 /* MapKit.framework */,
 				AAD1AD911AE87F7F0021CF99 /* CoreLocation.framework */,
 				AAD1AD6A1AE877520021CF99 /* TraveLog */,
 				AAD1AD841AE877530021CF99 /* TraveLogTests */,
@@ -429,6 +433,7 @@
 				AAD1AD8D1AE877530021CF99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AAD1AD8E1AE877530021CF99 /* Build configuration list for PBXNativeTarget "TraveLogTests" */ = {
 			isa = XCConfigurationList;
@@ -437,6 +442,7 @@
 				AAD1AD901AE877530021CF99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

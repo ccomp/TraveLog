@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
-@interface ViewController : UIViewController <CLLocationManagerDelegate>
+@interface ViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 {
     CLLocationManager *locationManager;
     IBOutlet UILabel *alertLabel;
@@ -17,6 +18,7 @@
     NSMutableDictionary *plistDict, *locDict;
     float latitude, longitude;
 }
+@property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 @property (weak, nonatomic) IBOutlet UILabel *Title;
 @property(nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, retain) IBOutlet UILabel *alertLabel;
