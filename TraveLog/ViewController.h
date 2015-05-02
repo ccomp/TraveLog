@@ -14,15 +14,16 @@
 {
     CLLocationManager *locationManager;
     IBOutlet UILabel *alertLabel;
-    NSString *plistPath, *locPath;
-    NSMutableDictionary *plistDict, *locDict;
+    NSString *locPath;
+    NSMutableDictionary *locDict;
     float latitude, longitude;
+    CLLocation *currentLoc;
+    
 }
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 @property (weak, nonatomic) IBOutlet UILabel *Title;
 @property(nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, retain) IBOutlet UILabel *alertLabel;
-//- (IBAction)startTracking:(id)sender;
 - (void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult)) completionHandler;
 
 @end

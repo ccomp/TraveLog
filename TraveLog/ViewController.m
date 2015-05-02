@@ -18,8 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //plistPath = [[NSBundle mainBundle] pathForResource:@"buttonPressed" ofType:@"plist"];
-    //plistDict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
     self.myMapView.delegate = self;
     [self.myMapView setShowsUserLocation:YES];
     locPath = [[NSBundle mainBundle] pathForResource:@"Locations" ofType:@"plist"];
@@ -39,8 +37,13 @@
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
+    int x = 2500, y = 2500;
     CLLocationCoordinate2D myLocation = [userLocation coordinate];
-    MKCoordinateRegion zoomRegion = MKCoordinateRegionMakeWithDistance(myLocation, 2500, 2500);
+    if (locDict.count != 0)
+    {
+        
+    }
+    MKCoordinateRegion zoomRegion = MKCoordinateRegionMakeWithDistance(myLocation, x, y);
     [self.myMapView setRegion:zoomRegion animated:YES];
 }
 
@@ -50,16 +53,15 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    CLLocation *currentLoc = [locations lastObject];
+    currentLoc = [locations lastObject];
     CLLocationCoordinate2D coords = currentLoc.coordinate;
-    NSLog(@"Called update");
     latitude = coords.latitude;
     longitude = coords.longitude;
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"Unable to start location manager. Error:%@", [error description]);
+    NSLog(@"Something went horribly wrong. Error:%@", [error description]);
 }
 
 -(void)locationManagerDidPauseLocationUpdates:(CLLocationManager *)manager
@@ -73,30 +75,23 @@
 }
 
 - (void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-    NSString * timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
-    latitude = locationManager.location.coordinate.latitude;
-    longitude = locationManager.location.coordinate.longitude;
-    NSLog(@"Latitude:%f", latitude);
-    NSLog(@"Longitude:%f", longitude);
-    NSLog(@"Time:%@", timestamp);
-    completionHandler(UIBackgroundFetchResultNewData);
-    //display mean time in plist as to not populate list with too many entries
-    //simulate background fetch
+    int i = 0;
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"MMMM dd, yyyy (EEEE) HH:mm:ss z Z"];
+    NSDate *now = [NSDate date];
+    NSString *timestamp = [format stringFromDate:now];
+    [locDict setObject:currentLoc forKey:timestamp];
+    [locDict writeToFile:locPath atomically:YES];
+    for (id key in locDict)
+    {
+        NSLog(@"Time%i:%@", i, key);
+        NSLog(@"Latitude%i:%f", i, ((CLLocation *)[locDict objectForKey:key]).coordinate.latitude);
+        NSLog(@"Longitude%i:%f", i, ((CLLocation *)[locDict objectForKey:key]).coordinate.longitude);
+        i++;
+    }
     
-    //start doing stuff with completionhandler
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
-/*
-- (IBAction)startTracking:(id)sender {
-    NSMutableDictionary *subDict = [[plistDict objectForKey:@"ENABLED"] mutableCopy];
-    if ([[subDict objectForKey:@"ENABLED"] boolValue]) {
-        [subDict setObject:[NSNumber numberWithBool:0] forKey:@"ENABLED"];
-    } else {
-        [subDict setObject:[NSNumber numberWithBool:1] forKey:@"ENABLED"];
-        [locationManager startUpdatingLocation];
-    }
-    NSLog(@"Button Pressed");
-}
-*/
 
 @end
