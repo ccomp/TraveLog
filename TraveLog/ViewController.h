@@ -19,6 +19,7 @@
     float latitude, longitude;
     CLLocation *currentLoc;
     
+    
 }
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 @property (weak, nonatomic) IBOutlet UILabel *Title;

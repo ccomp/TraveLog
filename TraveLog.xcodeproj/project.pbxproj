@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AACA4D4C1AF433E000A10210 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACA4D4B1AF433DF00A10210 /* MapKit.framework */; };
+		AACA4D4F1AFC590500A10210 /* AnnotationClass.m in Sources */ = {isa = PBXBuildFile; fileRef = AACA4D4E1AFC590500A10210 /* AnnotationClass.m */; };
 		AAD1AD6E1AE877520021CF99 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD1AD6D1AE877520021CF99 /* main.m */; };
 		AAD1AD711AE877520021CF99 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD1AD701AE877520021CF99 /* AppDelegate.m */; };
 		AAD1AD741AE877530021CF99 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD1AD731AE877530021CF99 /* ViewController.m */; };
@@ -32,6 +33,8 @@
 
 /* Begin PBXFileReference section */
 		AACA4D4B1AF433DF00A10210 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		AACA4D4D1AFC590500A10210 /* AnnotationClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnotationClass.h; sourceTree = "<group>"; };
+		AACA4D4E1AFC590500A10210 /* AnnotationClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnotationClass.m; sourceTree = "<group>"; };
 		AAD1AD681AE877520021CF99 /* TraveLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TraveLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD1AD6C1AE877520021CF99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAD1AD6D1AE877520021CF99 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -73,6 +76,8 @@
 		AAD1AD5F1AE877520021CF99 = {
 			isa = PBXGroup;
 			children = (
+				AACA4D4D1AFC590500A10210 /* AnnotationClass.h */,
+				AACA4D4E1AFC590500A10210 /* AnnotationClass.m */,
 				AACA4D4B1AF433DF00A10210 /* MapKit.framework */,
 				AAD1AD911AE87F7F0021CF99 /* CoreLocation.framework */,
 				AAD1AD6A1AE877520021CF99 /* TraveLog */,
@@ -241,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAD1AD741AE877530021CF99 /* ViewController.m in Sources */,
+				AACA4D4F1AFC590500A10210 /* AnnotationClass.m in Sources */,
 				AAD1AD711AE877520021CF99 /* AppDelegate.m in Sources */,
 				AAD1AD6E1AE877520021CF99 /* main.m in Sources */,
 			);

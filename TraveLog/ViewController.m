@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AnnotationClass.h"
 
 @interface ViewController ()
 
@@ -20,6 +21,8 @@
     [super viewDidLoad];
     self.myMapView.delegate = self;
     [self.myMapView setShowsUserLocation:YES];
+    [self.myMapView setZoomEnabled:YES];
+    [self.myMapView setScrollEnabled:YES];
     locPath = [[NSBundle mainBundle] pathForResource:@"Locations" ofType:@"plist"];
     locDict = [NSMutableDictionary dictionaryWithContentsOfFile:locPath];
     NSLog(@"locationServicesEnabled: %@", [CLLocationManager locationServicesEnabled] ? @"YES":@"NO");
@@ -96,22 +99,50 @@
 }
 
 - (void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    BOOL sameLoc = false;
     int i = 0;
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"MMMM dd, yyyy (EEEE) HH:mm:ss z Z"];
     NSDate *now = [NSDate date];
     NSString *timestamp = [format stringFromDate:now];
-    [locDict setObject:currentLoc forKey:timestamp];
-    [locDict writeToFile:locPath atomically:YES];
-    for (id key in locDict)
+    for (CLLocation * key in locDict)
     {
-        NSLog(@"Time%i:%@", i, key);
-        NSLog(@"Latitude%i:%f", i, ((CLLocation *)[locDict objectForKey:key]).coordinate.latitude);
-        NSLog(@"Longitude%i:%f", i, ((CLLocation *)[locDict objectForKey:key]).coordinate.longitude);
-        i++;
+        if (currentLoc == [locDict objectForKey:key])
+        {
+            sameLoc = true;
+            break;
+        }
     }
-    
-    completionHandler(UIBackgroundFetchResultNewData);
+    if (!sameLoc)
+    {
+        [locDict setObject:currentLoc forKey:timestamp];
+        [locDict writeToFile:locPath atomically:YES];
+        for (id key in locDict)
+        {
+            NSLog(@"Time%i:%@", i, key);
+            NSLog(@"Latitude%i:%f", i, ((CLLocation *)[locDict objectForKey:key]).coordinate.latitude);
+            NSLog(@"Longitude%i:%f", i, ((CLLocation *)[locDict objectForKey:key]).coordinate.longitude);
+            i++;
+        }
+        NSString *subtitle = [NSString stringWithFormat:@"%f, %f", currentLoc.coordinate.latitude, currentLoc.coordinate.longitude];
+        AnnotationClass *newLoc = [[AnnotationClass alloc] init];
+        [newLoc setPinTitle:timestamp];
+        [newLoc setSubTitle:subtitle];
+        newLoc.coordinate = currentLoc.coordinate;
+        [self.myMapView addAnnotation:newLoc];
+        completionHandler(UIBackgroundFetchResultNewData);
+    } else {
+        NSLog(@"User has not changed positions");
+        for (id key in locDict)
+        {
+            NSLog(@"Time%i:%@", i, key);
+            NSLog(@"Latitude%i:%f", i, ((CLLocation *)[locDict objectForKey:key]).coordinate.latitude);
+            NSLog(@"Longitude%i:%f", i, ((CLLocation *)[locDict objectForKey:key]).coordinate.longitude);
+            i++;
+        }
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
+
 }
 
 
