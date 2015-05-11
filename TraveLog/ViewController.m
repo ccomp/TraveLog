@@ -116,14 +116,11 @@
     if (!sameLoc)
     {
         [locDict setObject:currentLoc forKey:timestamp];
-        [locDict writeToFile:locPath atomically:YES];
-        /*
         NSArray  *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *directory = [paths objectAtIndex:0];
         NSString *fileName = @"Locations.plist";
         NSString *filePath = [directory stringByAppendingPathComponent:fileName];
         [locDict writeToFile:filePath atomically:YES];
-         */
         for (id key in locDict)
         {
             NSLog(@"Time%i:%@", i, key);
