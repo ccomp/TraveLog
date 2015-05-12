@@ -121,10 +121,17 @@
     if (!sameLoc)
     {
         [locDict setObject:currentLoc forKey:timestamp];
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *plistCatPath = [[NSBundle mainBundle]pathForResource:@"Locations" ofType:@"plist"];
+        if (![fileManager fileExistsAtPath:plistCatPath]) {
+            NSData *fileContents = [timestamp dataUsingEncoding:NSUTF8StringEncoding];
+            [fileManager createFileAtPath:plistCatPath contents:fileContents attributes:nil];
+        }
         NSMutableDictionary *rootDict = [[NSMutableDictionary alloc]initWithContentsOfFile:plistCatPath];
         [rootDict setObject:currentLoc forKey:timestamp];
-        [rootDict writeToFile:path atomically:YES];
+        [rootDict writeToFile:plistCatPath atomically:YES];
+        
         for (id key in rootDict)
         {
             NSLog(@"Time%i:%@", i, key);
