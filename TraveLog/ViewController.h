@@ -14,7 +14,7 @@
 {
     CLLocationManager *locationManager;
     IBOutlet UILabel *alertLabel;
-    NSString *locPath;
+    NSString *locPath, *path;
     NSMutableDictionary *locDict;
     float latitude, longitude;
     CLLocation *currentLoc;

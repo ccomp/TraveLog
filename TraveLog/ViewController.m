@@ -25,6 +25,10 @@
     [self.myMapView setScrollEnabled:YES];
     locPath = [[NSBundle mainBundle] pathForResource:@"Locations" ofType:@"plist"];
     locDict = [NSMutableDictionary dictionaryWithContentsOfFile:locPath];
+    
+    path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Locations.plist"];
+    [[NSFileManager defaultManager]createFileAtPath:path contents:nil attributes:nil];
+
     NSLog(@"locationServicesEnabled: %@", [CLLocationManager locationServicesEnabled] ? @"YES":@"NO");
     self.locationManager = [[CLLocationManager alloc] init];
     [self.locationManager setDelegate:self];
@@ -99,6 +103,7 @@
 }
 
 - (void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    
     BOOL sameLoc = false;
     int i = 0;
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -116,16 +121,15 @@
     if (!sameLoc)
     {
         [locDict setObject:currentLoc forKey:timestamp];
-        NSArray  *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *directory = [paths objectAtIndex:0];
-        NSString *fileName = @"Locations.plist";
-        NSString *filePath = [directory stringByAppendingPathComponent:fileName];
-        [locDict writeToFile:filePath atomically:YES];
-        for (id key in locDict)
+        NSString *plistCatPath = [[NSBundle mainBundle]pathForResource:@"Locations" ofType:@"plist"];
+        NSMutableDictionary *rootDict = [[NSMutableDictionary alloc]initWithContentsOfFile:plistCatPath];
+        [rootDict setObject:currentLoc forKey:timestamp];
+        [rootDict writeToFile:path atomically:YES];
+        for (id key in rootDict)
         {
             NSLog(@"Time%i:%@", i, key);
-            NSLog(@"Latitude%i:%f", i, ((CLLocation *)[locDict objectForKey:key]).coordinate.latitude);
-            NSLog(@"Longitude%i:%f", i, ((CLLocation *)[locDict objectForKey:key]).coordinate.longitude);
+            NSLog(@"Latitude%i:%f", i, ((CLLocation *)[rootDict objectForKey:key]).coordinate.latitude);
+            NSLog(@"Longitude%i:%f", i, ((CLLocation *)[rootDict objectForKey:key]).coordinate.longitude);
             i++;
         }
         NSString *subtitle = [NSString stringWithFormat:@"%f, %f", currentLoc.coordinate.latitude, currentLoc.coordinate.longitude];
