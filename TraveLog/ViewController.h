@@ -12,9 +12,10 @@
 
 @interface ViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 {
+    NSFileManager *fileManager;
     CLLocationManager *locationManager;
     IBOutlet UILabel *alertLabel;
-    NSString *locPath, *path;
+    NSString *locPath;
     NSMutableDictionary *locDict;
     float latitude, longitude;
     CLLocation *currentLoc;

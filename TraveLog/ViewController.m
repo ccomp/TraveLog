@@ -17,18 +17,22 @@
 @synthesize locationManager;
 @synthesize alertLabel;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.myMapView.delegate = self;
     [self.myMapView setShowsUserLocation:YES];
     [self.myMapView setZoomEnabled:YES];
     [self.myMapView setScrollEnabled:YES];
+    
     locPath = [[NSBundle mainBundle] pathForResource:@"Locations" ofType:@"plist"];
+    if (![fileManager fileExistsAtPath:locPath]) [fileManager createFileAtPath:locPath contents:nil attributes:nil];
     locDict = [NSMutableDictionary dictionaryWithContentsOfFile:locPath];
     
-    path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Locations.plist"];
-    [[NSFileManager defaultManager]createFileAtPath:path contents:nil attributes:nil];
-
+    if (locDict.count != 0)
+        for (NSString *key in locDict)
+            [locDict setObject:[NSKeyedUnarchiver unarchiveObjectWithData:[locDict objectForKey:key]] forKey:key];
+    
     NSLog(@"locationServicesEnabled: %@", [CLLocationManager locationServicesEnabled] ? @"YES":@"NO");
     self.locationManager = [[CLLocationManager alloc] init];
     [self.locationManager setDelegate:self];
@@ -42,7 +46,8 @@
     [self.locationManager startUpdatingLocation];
 }
 
-- (MKCoordinateRegion)createRegion {
+- (MKCoordinateRegion)createRegion
+{
     CLLocationCoordinate2D topLeftCoord;
     topLeftCoord.latitude = -90;
     topLeftCoord.longitude = 180;
@@ -51,7 +56,8 @@
     bottomRightCoord.latitude = 90;
     bottomRightCoord.longitude = -180;
     
-    for (id key in locDict) {
+    for (id key in locDict)
+    {
         topLeftCoord.longitude = fmin(topLeftCoord.longitude, ((CLLocation *)[locDict objectForKey:key]).coordinate.longitude);
         topLeftCoord.latitude = fmax(topLeftCoord.latitude, ((CLLocation *)[locDict objectForKey:key]).coordinate.latitude);
         bottomRightCoord.longitude = fmax(bottomRightCoord.longitude, ((CLLocation *)[locDict objectForKey:key]).coordinate.longitude);
@@ -75,7 +81,8 @@
     else [self.myMapView setRegion:[self createRegion] animated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
 }
 
@@ -102,14 +109,16 @@
     NSLog(@"If this is called something fixed itself");
 }
 
-- (void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-    
+- (void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
     BOOL sameLoc = false;
     int i = 0;
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"MMMM dd, yyyy (EEEE) HH:mm:ss z Z"];
     NSDate *now = [NSDate date];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"HH:mm"];
+    now = [NSDate date];
     NSString *timestamp = [format stringFromDate:now];
+    
     for (CLLocation * key in locDict)
     {
         if (currentLoc == [locDict objectForKey:key])
@@ -122,17 +131,11 @@
     {
         [locDict setObject:currentLoc forKey:timestamp];
         
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *plistCatPath = [[NSBundle mainBundle]pathForResource:@"Locations" ofType:@"plist"];
-        if (![fileManager fileExistsAtPath:plistCatPath])
-        {
-            NSData *fileContents = [timestamp dataUsingEncoding:NSUTF8StringEncoding];
-            [fileManager createFileAtPath:plistCatPath contents:fileContents attributes:nil];
-        }
-        NSMutableDictionary *rootDict = [[NSMutableDictionary alloc]initWithContentsOfFile:plistCatPath];
+        fileManager = [NSFileManager defaultManager];
+        NSMutableDictionary *rootDict = [[NSMutableDictionary alloc]initWithContentsOfFile:locPath];
         NSData *objData = [NSKeyedArchiver archivedDataWithRootObject:currentLoc];
         [rootDict setObject:objData forKey:timestamp];
-        [rootDict writeToURL:[NSURL fileURLWithPath:plistCatPath] atomically:YES];
+        [rootDict writeToURL:[NSURL fileURLWithPath:locPath] atomically:YES];
         
         for (NSString *key in [rootDict allKeys])
         {
@@ -142,14 +145,16 @@
             NSLog(@"Longitude%i:%f", i, ((CLLocation *)[rootDict objectForKey:key]).coordinate.longitude);
             i++;
         }
-        NSString *subtitle = [NSString stringWithFormat:@"%f, %f", currentLoc.coordinate.latitude, currentLoc.coordinate.longitude];
+        
+        NSString *subtitle = [NSString stringWithFormat:@"%f, %f", latitude, longitude];
         AnnotationClass *newLoc = [[AnnotationClass alloc] init];
         [newLoc setPinTitle:timestamp];
         [newLoc setSubTitle:subtitle];
         newLoc.coordinate = currentLoc.coordinate;
         [self.myMapView addAnnotation:newLoc];
         completionHandler(UIBackgroundFetchResultNewData);
-    } else {
+    } else
+    {
         NSLog(@"User has not changed positions");
         for (id key in locDict)
         {
