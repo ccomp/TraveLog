@@ -124,16 +124,19 @@
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *plistCatPath = [[NSBundle mainBundle]pathForResource:@"Locations" ofType:@"plist"];
-        if (![fileManager fileExistsAtPath:plistCatPath]) {
+        if (![fileManager fileExistsAtPath:plistCatPath])
+        {
             NSData *fileContents = [timestamp dataUsingEncoding:NSUTF8StringEncoding];
             [fileManager createFileAtPath:plistCatPath contents:fileContents attributes:nil];
         }
         NSMutableDictionary *rootDict = [[NSMutableDictionary alloc]initWithContentsOfFile:plistCatPath];
-        [rootDict setObject:currentLoc forKey:timestamp];
-        [rootDict writeToFile:plistCatPath atomically:YES];
+        NSData *objData = [NSKeyedArchiver archivedDataWithRootObject:currentLoc];
+        [rootDict setObject:objData forKey:timestamp];
+        [rootDict writeToURL:[NSURL fileURLWithPath:plistCatPath] atomically:YES];
         
-        for (id key in rootDict)
+        for (NSString *key in [rootDict allKeys])
         {
+            [rootDict setObject:[NSKeyedUnarchiver unarchiveObjectWithData:[rootDict objectForKey:key]] forKey:key];
             NSLog(@"Time%i:%@", i, key);
             NSLog(@"Latitude%i:%f", i, ((CLLocation *)[rootDict objectForKey:key]).coordinate.latitude);
             NSLog(@"Longitude%i:%f", i, ((CLLocation *)[rootDict objectForKey:key]).coordinate.longitude);
